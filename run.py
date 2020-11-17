@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #임포트
-import asyncio, discord, datetime, requests, urllib, time, random
+import asyncio, discord, datetime, requests, urllib, time, random, os
 
 from discord.ext import commands
 from selenium import webdriver
@@ -8,7 +8,9 @@ from bs4 import BeautifulSoup
 
 #봇 초기 설정
 app = discord.Client()
-token = "Nzc3MDA5MjU5NjIzMjE5MjEy.X69MQw.ypEYR0RYgx4ycWZsxp6g_GQ68uc"
+
+access_token = os.environ["BOT_TOKEN"]
+token = access_token
 
 #봇 첫 로그인
 @app.event
