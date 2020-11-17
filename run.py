@@ -166,7 +166,7 @@ def showServerInfo():
 def showTime(i):
     #시간 가져오기
     KST = datetime.datetime.now() + datetime.timedelta(hours = 9 + i)
-    PST = datetime.datetime.now() - datetime.timedelta(hours = 11 - i)
+    PST = datetime.datetime.now() - datetime.timedelta(hours = 8 - i)
 
     #임베디드 생성
     embed = discord.Embed(title = "시간", description = "====================")
