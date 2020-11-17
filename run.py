@@ -165,8 +165,8 @@ def showServerInfo():
 #캐나다 / 한국 시간 출력
 def showTime(i):
     #시간 가져오기
-    KST = datetime.datetime.now() + datetime.timedelta(hours = i)
-    PST = datetime.datetime.now() - datetime.timedelta(hours = 17 - i)
+    KST = datetime.datetime.now() + datetime.timedelta(hours = 9 + i)
+    PST = datetime.datetime.now() - datetime.timedelta(hours = 26 - i)
 
     #임베디드 생성
     embed = discord.Embed(title = "시간", description = "====================")
