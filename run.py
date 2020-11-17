@@ -126,7 +126,10 @@ async def on_message(message):
     #주사위
     elif param[0] == "!주사위":
         await message.channel.send(embed = discord.Embed(title = "태형이의 선택은", description = str(random.randrange(int(param[1]), int(param[2])))))
-
+        
+    elif param[0] == "!블서":
+        await message.channel.send(embed = showBSELUserInfo(str(param[1])))
+        
     #명령어 오류
     else:
         msg = await message.channel.send(embed = discord.Embed(title = "!오류", description = "존재하지 않는 명령어입니다"))
@@ -257,39 +260,10 @@ def showUserVote(userName, param):
     return embed
 
 def showBSELUserInfo(userNameData):
-    driver = webdriver.Chrome("chromedriver")
-    driver.get("http://matchhistory.playeternalreturn.com/kr/name=" + urllib.parse.quote(userNameData))
-    driver.find_elements_by_id("beta_btn")[2].click()
+    _url = "http://matchhistory.playeternalreturn.com/kr/name=" + urllib.parse.quote(userNameData))
 
-    while driver.find_element_by_class_name("loading").value_of_css_property("display") == "block":
-        time.sleep(1)
+    embed = discord.Embed(title = userNameData + "님의 블서 전적입니다", description = "영원회귀 api 제공전까지는 링크만 제공합니다.", url = _url)
 
-    html = driver.page_source
-    soup = BeautifulSoup(html, "html.parser")
-
-    gameDatas = soup.select(".show-data .gamecolumns")
-    embed = discord.Embed(title = userNameData + "님의 블서 전적")
-
-    for game in gameDatas:
-        inGameDatas = game.select_one(".tablecontainer > tbody").select(".tdborder")
-        print(inGameDatas[6].get_text())
-        gameChar = inGameDatas[6].select_one("a").get_text()
-        gameLevel = inGameDatas[7].get_text()
-        gameGrade = inGameDatas[8].select_one(".numberCircle").get_text()
-        gameKill = inGameDatas[9].get_text()
-        gameAniKill = inGameDatas[10].get_text()
-
-        gameTime = game.select_one(".gamecard_title b").get_text()
-
-        embed.add_field(name = "캐릭터", value = gameChar)
-        embed.add_field(name = "레벨", value = gameLevel)
-        embed.add_field(name = "등수", value = gameGrade)
-        embed.add_field(name = "킬수", value = gameKill)
-        embed.add_field(name = "동물 킬", value = gameAniKill)
-
-        embed.set_footer(text = gameTime)
-
-    driver.__exit__()
     return embed
 
 def userNameChange(_userName):
