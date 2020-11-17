@@ -260,7 +260,7 @@ def showUserVote(userName, param):
     return embed
 
 def showBSELUserInfo(userNameData):
-    _url = "http://matchhistory.playeternalreturn.com/kr/name=" + urllib.parse.quote(userNameData))
+    _url = "http://matchhistory.playeternalreturn.com/kr/name=" + urllib.parse.quote(userNameData)
 
     embed = discord.Embed(title = userNameData + "님의 블서 전적입니다", description = "영원회귀 api 제공전까지는 링크만 제공합니다.", url = _url)
 
