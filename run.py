@@ -127,8 +127,13 @@ async def on_message(message):
     elif param[0] == "!주사위":
         await message.channel.send(embed = discord.Embed(title = "태형이의 선택은", description = str(random.randrange(int(param[1]), int(param[2])))))
         
+    #블서 전적
     elif param[0] == "!블서":
         await message.channel.send(embed = showBSELUserInfo(str(param[1])))
+
+    #수능 D-DAY
+    elif param[0] == "!수능":
+        await message.channel.send(embed = showSATDDAY())
         
     #명령어 오류
     else:
@@ -259,12 +264,20 @@ def showUserVote(userName, param):
     
     return embed
 
+#블서 url 출력
 def showBSELUserInfo(userNameData):
     _url = "http://matchhistory.playeternalreturn.com/kr/name=" + urllib.parse.quote(userNameData)
 
     embed = discord.Embed(title = userNameData + "님의 블서 전적입니다", description = "영원회귀 api 제공전까지는 링크만 제공합니다.", url = _url)
 
     return embed
+
+#수능 DDAY 생성
+def showSATDDAY():
+    start_day = datetime.datetime.now() + datetime.timedelta(hours = 9)
+    end_day = datetime.datetime.now() + datetime.timedelta(days = 365, hours= 9)
+
+    return discord.Embed(title = "수능까지 " + (end_day - start_day).days + "일 남았습니다.", description = "게임 그만하고 공부하러 가세요.")
 
 def userNameChange(_userName):
     userName = _userName
