@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*- 
 #임포트
 import asyncio, discord, datetime, requests, urllib, time, random, os
 
