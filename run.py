@@ -240,9 +240,9 @@ def showLOLBuild(ChampionName):
     #GameChamItemRune
 
     embed = discord.Embed(title = ChampionName + "의 추천 빌드입니다", url = "https://www.op.gg/champion/" + LOLCharToEng(ChampionName).rstrip("\n") + "/statistics")
-    embed.add_field(name = "---------------------------------------------", value = "챔피언 티어 : " GameChamTier + "티어", inline = False)
+    embed.add_field(name = "---------------------------------------------", value = "챔피언 티어 : " + GameChamTier + "티어", inline = False)
     embed.add_field(name = "추천 소환사 주문", value = GameChamSpell1 + ", " + GameChamSpell2)
-    #embed.set_thumbnail(url = "https://opgg-static.akamaized.net/images/lol/champion/" + str(LOLCharToEng(ChampionName).rstrip("\n")) + ".png")
+    embed.set_thumbnail(url = "https://opgg-static.akamaized.net/images/lol/champion/" + LOLCharToEng(ChampionName).rstrip("\n") + ".png")
     
     return embed
 
