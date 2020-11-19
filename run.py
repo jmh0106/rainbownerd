@@ -229,18 +229,19 @@ def showLOLBuild(ChampionName):
 
     #크롤링 준비
     soup = BeautifulSoup(source, "html.parser")
-    overViewDataList = soup.select(".champion-overview__data")
 
     #웹에서 정보 가져오기
     GameChamTier = soup.select_one(".champion-stats-header-info__tier > b").get_text().split()[1]
-    GameChamSpell = overViewDataList[1]
+    GameChamSpell1 = str(soup.select(".tip")[6])[75:79]
+    GameChamSpell2 = str(soup.select(".tip")[7])[75:79]
     #GameChamSkill
     #GameChamStartItem
     #GameChamItemBuild
     #GameChamItemRune
 
     embed = discord.Embed(title = ChampionName + "의 추천 빌드입니다", url = "https://www.op.gg/champion/" + LOLCharToEng(ChampionName).rstrip("\n") + "/statistics")
-
+    embed.add_field(name = "추천 소환사 주문", value = GameChamSpell1 + ", " + GameChamSpell2)
+    
     return embed
 
 #롤 챔피언 이름 ( 한글 -> 영어 )
