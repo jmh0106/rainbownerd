@@ -232,8 +232,8 @@ def showLOLBuild(ChampionName):
 
     #웹에서 정보 가져오기
     GameChamTier = soup.select_one(".champion-stats-header-info__tier > b").get_text().split()[1]
-    GameChamSpell1 = str(soup.select(".tip")[6])[75:79]
-    GameChamSpell2 = str(soup.select(".tip")[7])[75:79]
+    GameChamSpell1 = SpellEngToKor(str(soup.select(".tip")[6])[75:79])
+    GameChamSpell2 = SpellEngToKor(str(soup.select(".tip")[7])[75:79])
     #GameChamSkill
     #GameChamStartItem
     #GameChamItemBuild
@@ -292,5 +292,26 @@ def userNameChange(_userName):
 def showRandomChoice(param):
     randomNum = random.randrange(1, len(param))
     return param[randomNum]
+
+#롤 스펠이름 (영어 -> 한글)
+def SpellEngToKor(EngSpellName):
+    if (EngSpellName == "Flas"):
+        return "점멸"
+    elif (EngSpellName == "Tele"):
+        return "순간이동"
+    elif (EngSpellName == "Heal"):
+        return "회복"
+    elif (EngSpellName == "Ghos"):
+        return "유체화"
+    elif (EngSpellName == "Barr"):
+        return "방어막"
+    elif (EngSpellName == "Exha"):
+        return "탈진"
+    elif (EngSpellName == "Smit"):
+        return "강타"
+    elif (EngSpellName == "Clea"):
+        return "정화"
+    elif (EngSpellName == "Igni"):
+        return "점화"
 
 app.run(token)
