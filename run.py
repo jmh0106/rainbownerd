@@ -168,7 +168,7 @@ def showServerInfo():
     embed.add_field(name = "!투표 <선택지 : 최소 2, 최대 5>", value = "투표를 진행할 수 있습니다.", inline = False)
     embed.add_field(name = "!랜덤 <선택지 : 최소 1, 최대 10>", value = "랜덤한 선택지를 골라줍니다.", inline = False)
     embed.add_field(name = "!주사위 <숫자> <숫자>", value = "두 수 사이의 랜덤한 숫자를 골라줍니다.", inline = False)
-    embed.add_field(name = "!수능", value = "수능까지 남은 날짜를 보여줍니다."
+    embed.add_field(name = "!수능", value = "수능까지 남은 날짜를 보여줍니다.", inline = False)
     return embed
 
 #캐나다 / 한국 시간 출력
