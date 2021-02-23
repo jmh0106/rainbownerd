@@ -282,7 +282,7 @@ def showSATDDAY():
     start_time = datetime.date(start_time_temp.year, start_time_temp.month, start_time_temp.day)
     end_time = datetime.date(2021, 11, 18)
 
-    return discord.Embed(title = "수능까지 " + str((end_time - start_time).days) + "일 남았습니다.", description = "게임 그만하고 공부하러 가세요.")
+    return discord.Embed(title = "수능까지 " + str((end_time - start_time).days) + "일 남았습니다.", description = "공부 그만하고 게임하러 가세요.")
 
 def userNameChange(_userName):
     userName = _userName
