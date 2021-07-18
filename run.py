@@ -164,7 +164,6 @@ def showServerInfo():
     embed.add_field(name = "!롤 <소환사 이름> <횟수 : 최대 9>", value = "롤 전적을 알려줍니다.", inline = False)
     embed.add_field(name = "!롤 빌드 <챔피언 이름>", value = "롤 챔피언 빌드를 알려줍니다.")
     embed.add_field(name = "!블서 <플레이어 이름>", value = "블랙서바이벌 전적을 알려줍니다.", inline = False)
-    embed.add_field(name = "!전장 기물 <등급> <종족>", value ="전장 기물을 알려줍니다.", inline = False)
     embed.add_field(name = "!투표 <선택지 : 최소 2, 최대 5>", value = "투표를 진행할 수 있습니다.", inline = False)
     embed.add_field(name = "!랜덤 <선택지 : 최소 1, 최대 10>", value = "랜덤한 선택지를 골라줍니다.", inline = False)
     embed.add_field(name = "!주사위 <숫자> <숫자>", value = "두 수 사이의 랜덤한 숫자를 골라줍니다.", inline = False)
@@ -270,7 +269,7 @@ def showUserVote(userName, param):
 
 #블서 url 출력
 def showBSELUserInfo(userNameData):
-    _url = "http://matchhistory.playeternalreturn.com/kr/name=" + urllib.parse.quote(userNameData)
+    _url = "https://dak.gg/bser/players/" + urllib.parse.quote(userNameData)
 
     embed = discord.Embed(title = userNameData + "님의 블서 전적입니다", description = "영원회귀 api 제공전까지는 링크만 제공합니다.", url = _url)
 
