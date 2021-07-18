@@ -44,9 +44,9 @@ async def on_message(message):
     #!시간
     elif param[0] == "!시간":
         if (len(param) == 1):
-            await message.channel.send(embed = showTime(0))
+            await message.channel.send(embed = showTime(str(message.author), 0))
         else:
-            await message.channel.send(embed = showTime(int(param[1])))
+            await message.channel.send(embed = showTime(str(message.author), int(param[1])))
 
     #!롤
     elif param[0] == "!롤":
@@ -172,13 +172,13 @@ def showServerInfo():
     return embed
 
 #캐나다 / 한국 시간 출력
-def showTime(i):
+def showTime(userName, i):
     #시간 가져오기
     KST = datetime.datetime.now() + datetime.timedelta(hours = 9 + i)
     PST = datetime.datetime.now() - datetime.timedelta(hours = 8 - i)
 
     #임베디드 생성
-    embed = discord.Embed(title = "시간", description = "====================")
+    embed = discord.Embed(title = userName + "님의 시간", description = "====================")
     embed.add_field(name = "캐나다 시간", value = str(PST.year) + "년 " + str(PST.month) + "월 " + str(PST.day) + "일 ㅣ" + str(PST.hour).zfill(2) + ":" + str(PST.minute).zfill(2) + ":" + str(PST.second).zfill(2), inline = False)
     embed.add_field(name = "한국 시간", value = str(KST.year) + "년 " + str(KST.month) + "월 " + str(KST.day) + "일 ㅣ" + str(KST.hour).zfill(2) + ":" + str(KST.minute).zfill(2) + ":" + str(KST.second).zfill(2), inline = False)
     return embed
