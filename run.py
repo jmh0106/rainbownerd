@@ -9,8 +9,7 @@ from bs4 import BeautifulSoup
 #봇 초기 설정
 app = discord.Client()
 
-#access_token = os.environ["BOT_TOKEN"]
-access_token = "Nzc3MDA5MjU5NjIzMjE5MjEy.X69MQw.z7ayqvBVhKEfKwtVMJmxJYQ21Dc"
+access_token = os.environ["BOT_TOKEN"]
 token = access_token
 
 #봇 첫 로그인
