@@ -302,9 +302,15 @@ def KorCOVID19():
     source = requests.get(_url).text
     soup = BeautifulSoup(source, "html.parser")
     한국누적확진자 = soup.select_one("#content > div > div.caseTable > div:nth-child(1) > ul > li:nth-child(1) > dl > dd").get_text()
+    한국추가누적확진자 = soup.select_one("#content > div > div.caseTable > div:nth-child(1) > ul > li:nth-child(2) > dl > dd > ul > li:nth-child(1) > p").get_text()
+    한국누적사망자 = soup.select_one("#content > div > div.caseTable > div:nth-child(4) > ul > li:nth-child(1) > dl > dd").get_text()
+    한국추가누적사망자 = soup.select_one("#content > div > div.caseTable > div:nth-child(4) > ul > li:nth-child(2) > dl > dd > span").get_text()
+    한국확진자그래프 = soup.select_one("#daily_patient")
 
     embed = discord.Embed(title = "한국, 캐나다 코로나 확진자")
-    embed.add_field(name = "한국 누적확진자", value = 한국누적확진자, inline = False)
+    embed.add_field(name = "한국 누적확진자", value = 한국누적확진자 + " ( " + 한국추가누적확진자 + " )")
+    embed.add_field(name = "한국 누적사망자", value = 한국누적사망자 + " ( " + 한국추가누적사망자 + " )", inline = False)
+    embed.set_image(한국확진자그래프)
 
     return embed
 
