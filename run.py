@@ -9,7 +9,8 @@ from bs4 import BeautifulSoup
 #봇 초기 설정
 app = discord.Client()
 
-access_token = os.environ["BOT_TOKEN"]
+#access_token = os.environ["BOT_TOKEN"]
+access_token = "Nzc3MDA5MjU5NjIzMjE5MjEy.X69MQw.z7ayqvBVhKEfKwtVMJmxJYQ21Dc"
 token = access_token
 
 #봇 첫 로그인
@@ -134,6 +135,9 @@ async def on_message(message):
     #수능 D-DAY
     elif param[0] == "!수능":
         await message.channel.send(embed = showSATDDAY())
+
+    elif param[0] == "!코로나":
+        await message.channel.send(embed = KorCOVID19())
         
     #명령어 오류
     else:
@@ -293,6 +297,19 @@ def userNameChange(_userName):
 def showRandomChoice(param):
     randomNum = random.randrange(1, len(param))
     return param[randomNum]
+
+def KorCOVID19():
+    _url = "http://ncov.mohw.go.kr/bdBoardList_Real.do"
+    source = requests.get(_url).text
+    soup = BeautifulSoup(source, "html.parser")
+    한국누적확진자 = soup.select_one("#content > div > div.caseTable > div:nth-child(1) > ul > li:nth-child(1) > dl > dd").get_text()
+
+    embed = discord.Embed(title = "한국, 캐나다 코로나 확진자")
+    embed.add_field(name = "한국 누적확진자", value = 한국누적확진자, inline = False)
+
+    return embed
+
+#def CadCOVID19():
 
 #롤 스펠이름 (영어 -> 한글)
 def SpellEngToKor(EngSpellName):
