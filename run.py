@@ -9,7 +9,8 @@ from bs4 import BeautifulSoup
 #봇 초기 설정
 app = discord.Client()
 
-access_token = os.environ["BOT_TOKEN"]
+#access_token = os.environ["BOT_TOKEN"]
+access_token = "Nzc3MDA5MjU5NjIzMjE5MjEy.X69MQw.JD-0sc0Bl-CqAJtCQZ1_43VyeGY"
 token = access_token
 
 #봇 첫 로그인
@@ -305,12 +306,10 @@ def KorCOVID19():
     한국추가누적확진자 = soup.select_one("#content > div > div.caseTable > div:nth-child(1) > ul > li:nth-child(2) > dl > dd > ul > li:nth-child(1) > p").get_text()
     한국누적사망자 = soup.select_one("#content > div > div.caseTable > div:nth-child(4) > ul > li:nth-child(1) > dl > dd").get_text()
     한국추가누적사망자 = soup.select_one("#content > div > div.caseTable > div:nth-child(4) > ul > li:nth-child(2) > dl > dd > span").get_text()
-    한국확진자그래프 = soup.select_one("#daily_patient")
 
     embed = discord.Embed(title = "한국, 캐나다 코로나 확진자")
     embed.add_field(name = "한국 누적확진자", value = 한국누적확진자 + " ( " + 한국추가누적확진자 + " )")
     embed.add_field(name = "한국 누적사망자", value = 한국누적사망자 + " ( " + 한국추가누적사망자 + " )", inline = False)
-    embed.set_image(한국확진자그래프)
 
     return embed
 
