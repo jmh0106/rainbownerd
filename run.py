@@ -3,7 +3,6 @@
 import asyncio, discord, datetime, requests, urllib, time, random, os
 
 from discord.ext import commands
-from selenium import webdriver
 from bs4 import BeautifulSoup
 
 #봇 초기 설정
