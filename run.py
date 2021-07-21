@@ -9,14 +9,8 @@ from bs4 import BeautifulSoup
 #봇 초기 설정
 app = discord.Client()
 
-# 구글 스프레드시트 권한 가져오기
 access_token = os.environ["BOT_TOKEN"]
 token = access_token
-scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-credentials = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
-sheetAuth = gspread.authorize(credentials)
-sheetNote = sheetAuth.open("RainbowNerdData").worksheet('메모')
-sheetNoteValue = sheetNote.get_all_values()
 
 #봇 첫 로그인
 @app.event
@@ -329,13 +323,21 @@ def KorCOVID19():
 
 def printNote():
     embed = discord.Embed(title = "메모장")
-
+    scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
+    credentials = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+    sheetAuth = gspread.authorize(credentials)
+    sheetNote = sheetAuth.open("RainbowNerdData").worksheet('메모')
+    sheetNoteValue = sheetNote.get_all_values()
     for i in sheetNoteValue:
         embed.add_field(name = i[0], value = i[1])
 
     return embed
 
 def writeNote(userName, noteDes):
+    scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
+    credentials = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+    sheetAuth = gspread.authorize(credentials)
+    sheetNote = sheetAuth.open("RainbowNerdData").worksheet('메모')
     sheetNoteValue = sheetNote.get_all_values()
     writeNum = str(len(sheetNoteValue) + 1)
     sheetNote.update_acell("A" + writeNum, userName)
@@ -345,6 +347,10 @@ def writeNote(userName, noteDes):
     return discord.Embed(title = "메모장", description = "메모가 정상적으로 입력되었습니다")
 
 def deleteNote(userName, noteNum):
+    scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
+    credentials = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+    sheetAuth = gspread.authorize(credentials)
+    sheetNote = sheetAuth.open("RainbowNerdData").worksheet('메모')
     sheetNoteValue = sheetNote.get_all_values()
     if (userName == sheetNoteValue[noteNum - 1][0]):
         for i in range(noteNum, len(sheetNoteValue)):
