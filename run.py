@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*- 
 #임포트
-import asyncio, discord, datetime, requests, urllib, gspread, random, os
+import asyncio, discord, datetime, requests, urllib, time, random, os
 
-from oauth2client.service_account import ServiceAccountCredentials
 from discord.ext import commands
+from selenium import webdriver
 from bs4 import BeautifulSoup
 
 #봇 초기 설정
 app = discord.Client()
 
-#access_token = os.environ["BOT_TOKEN"]
-access_token = "Nzc3MDA5MjU5NjIzMjE5MjEy.X69MQw.JD-0sc0Bl-CqAJtCQZ1_43VyeGY"
+access_token = os.environ["BOT_TOKEN"]
 token = access_token
 
 #봇 첫 로그인
@@ -20,7 +19,6 @@ async def on_ready():
     print(app.user.name)
     print(app.user.id)
     print("==========")
-
     game = discord.Game("!도움말")
     await app.change_presence(status = discord.Status.online, activity = game)
 
@@ -139,14 +137,6 @@ async def on_message(message):
 
     elif param[0] == "!코로나":
         await message.channel.send(embed = KorCOVID19())
-
-    elif param[0] == "!메모":
-        if param[1] == None:
-            await message.channel.send(embed = printNote())
-        elif param[1] == "작성":
-            await message.channel.send(embed = writeNote(str(message.author), param[2]))
-        elif param[1] == "삭제":
-            await message.channel.send(embed = deleteNote(str(message.author), param[2]))
         
     #명령어 오류
     else:
@@ -321,47 +311,6 @@ def KorCOVID19():
     embed.add_field(name = "한국 누적사망자", value = 한국누적사망자 + " ( " + 한국추가누적사망자 + " )", inline = False)
 
     return embed
-
-def printNote():
-    embed = discord.Embed(title = "메모장")
-    scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-    credentials = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
-    sheetAuth = gspread.authorize(credentials)
-    sheetNote = sheetAuth.open("RainbowNerdData").worksheet('메모')
-    sheetNoteValue = sheetNote.get_all_values()
-    for i in sheetNoteValue:
-        embed.add_field(name = i[0], value = i[1])
-
-    return embed
-
-def writeNote(userName, noteDes):
-    scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-    credentials = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
-    sheetAuth = gspread.authorize(credentials)
-    sheetNote = sheetAuth.open("RainbowNerdData").worksheet('메모')
-    sheetNoteValue = sheetNote.get_all_values()
-    writeNum = str(len(sheetNoteValue) + 1)
-    sheetNote.update_acell("A" + writeNum, userName)
-    sheetNote.update_acell("B" + writeNum, noteDes)
-    sheetNoteValue = sheetNote.get_all_values()
-
-    return discord.Embed(title = "메모장", description = "메모가 정상적으로 입력되었습니다")
-
-def deleteNote(userName, noteNum):
-    scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-    credentials = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
-    sheetAuth = gspread.authorize(credentials)
-    sheetNote = sheetAuth.open("RainbowNerdData").worksheet('메모')
-    sheetNoteValue = sheetNote.get_all_values()
-    if (userName == sheetNoteValue[noteNum - 1][0]):
-        for i in range(noteNum, len(sheetNoteValue)):
-            sheetNote.update("A" + str(i), sheetNoteValue[i][0])
-            sheetNote.update("B" + str(i), sheetNoteValue[i][1])
-        sheetNote.update("A" + str(len(sheetNoteValue)), '')
-        sheetNote.update("B" + str(len(sheetNoteValue)), '')
-        sheetNoteValue = sheetNote.get_all_values()
-    
-    return discord.Embed(title = "메모장", description = str(noteNum) + "번째 메모가 정상적으로 삭제되었습니다")
 
 #def CadCOVID19():
 
