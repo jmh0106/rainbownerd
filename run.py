@@ -26,6 +26,9 @@ async def on_ready():
 #메세지 처리
 @app.event
 async def on_message(message):
+    global ForbiddenWord
+    global isFobiddenGame
+
     #봇의 메세지라면 리턴
     if message.author.bot:
         return None
