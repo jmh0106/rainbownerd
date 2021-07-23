@@ -41,7 +41,7 @@ async def on_message(message):
     else:
         return None
     
-    if message.content.find(ForbiddenWord) != -1 and isFobiddenGame is True:
+    if message.content.find(str(ForbiddenWord)) != -1 and isFobiddenGame is True:
         await message.channel.send(embed = discord.Embed(title = "님이 금지어를 사용하셨습니다.", description = "와"))
 
     #!도움말
