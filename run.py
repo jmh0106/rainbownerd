@@ -147,10 +147,9 @@ async def on_message(message):
     elif param[0] == "!금지어":
         global isFobiddenGame
 
-        msg = await message.channel.send(embed = SetForbiddenWord(str(param[1]), str(param[2])))
+        await message.channel.send(embed = SetForbiddenWord(str(param[1]), str(param[2])))
         await asyncio.sleep(int(param[2]) * 60)
         isFobiddenGame = False
-        await msg.delete()
 
     #명령어 오류
     else:
