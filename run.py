@@ -39,7 +39,7 @@ async def on_message(message):
         return None
     
     if message.content.find(ForbiddenWord) is not -1:
-        await message.channel.send(discord.Embed(title = message.author + "님이 금지어를 사용하셨습니다."))
+        await message.channel.send(embed = discord.Embed(title = message.author + "님이 금지어를 사용하셨습니다."))
 
     #!도움말
     elif param[0] == "!도움말":
