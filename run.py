@@ -10,8 +10,6 @@ app = discord.Client()
 
 access_token = os.environ["BOT_TOKEN"]
 token = access_token
-isFobiddenGame = False
-ForbiddenWord = "기본금지어단어"
 
 #봇 첫 로그인
 @app.event
@@ -26,9 +24,6 @@ async def on_ready():
 #메세지 처리
 @app.event
 async def on_message(message):
-    global ForbiddenWord
-    global isFobiddenGame
-
     #봇의 메세지라면 리턴
     if message.author.bot:
         return None
@@ -41,11 +36,8 @@ async def on_message(message):
     else:
         return None
     
-    if message.content.find(str(ForbiddenWord)) != -1 and isFobiddenGame is True:
-        await message.channel.send(embed = discord.Embed(title = "님이 금지어를 사용하셨습니다.", description = "와"))
-
     #!도움말
-    elif param[0] == "!도움말":
+    if param[0] == "!도움말":
         await message.channel.send(embed = showServerInfo())
 
     #!시간
@@ -142,18 +134,9 @@ async def on_message(message):
     elif param[0] == "!수능":
         await message.channel.send(embed = showSATDDAY())
 
-    # 코로나
     elif param[0] == "!코로나":
         await message.channel.send(embed = KorCOVID19())
         
-    # 금지어
-    elif param[0] == "!금지어":
-        global isFobiddenGame
-
-        await message.channel.send(embed = SetForbiddenWord(str(param[1]), str(param[2])))
-        await asyncio.sleep(int(param[2]) * 60)
-        isFobiddenGame = False
-
     #명령어 오류
     else:
         msg = await message.channel.send(embed = discord.Embed(title = "!오류", description = "존재하지 않는 명령어입니다"))
@@ -328,18 +311,6 @@ def KorCOVID19():
 
     return embed
 
-def SetForbiddenWord(word, time):
-    global isFobiddenGame
-    global ForbiddenWord
-
-    if (isFobiddenGame == True):
-        embed = discord.Embed(title = "금지어 존재", description = "이미 금지어 게임이 진행중입니다.")
-    else:
-        isFobiddenGame = True
-        ForbiddenWord = word
-        embed = discord.Embed(title = "금지어 시작", description = word + "가 금지어로 정해졌습니다. " + time + "분 동안 사용하실 수 없습니다.")
-
-    return embed
 #def CadCOVID19():
 
 #롤 스펠이름 (영어 -> 한글)
