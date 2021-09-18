@@ -136,6 +136,9 @@ async def on_message(message):
 
     elif param[0] == "!코로나":
         await message.channel.send(embed = KorCOVID19())
+    
+    elif param[0] == "!영재":
+        await message.channel.send(embed = GeniusToKor())
         
     #명령어 오류
     else:
@@ -312,6 +315,13 @@ def KorCOVID19():
     return embed
 
 #def CadCOVID19():
+
+def GeniusToKor():
+    start_time_temp = datetime.datetime.now()
+    start_time = datetime.date(start_time_temp.year, start_time_temp.month, start_time_temp.day)
+    end_time = datetime.date(2021, 12, 20)
+
+    return discord.Embed(title = "영재 한국행까지 " + str((end_time - start_time).days) + "일 남았습니다.", description = "한국뿌셔 지구뿌셔")
 
 #롤 스펠이름 (영어 -> 한글)
 def SpellEngToKor(EngSpellName):
