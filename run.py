@@ -179,7 +179,10 @@ def showServerInfo():
 def showTime(userName, i):
     #시간 가져오기
     KST = datetime.datetime.now() + datetime.timedelta(hours = 9 + i)
-    PST = datetime.datetime.now() - datetime.timedelta(hours = 8 - i)
+    if datetime.datetime.now() < datetime.datetime(2021, 11, 7):
+        PST = datetime.datetime.now() - datetime.timedelta(hours = 8 - i)
+    else:
+        PST = datetime.datetime.now() - datetime.timedelta(hours = 7 - i)
 
     #임베디드 생성
     embed = discord.Embed(title = userName + "님의 시간", description = "====================")
