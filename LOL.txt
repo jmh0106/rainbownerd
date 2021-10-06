@@ -8,6 +8,8 @@ gragas
 그라가스
 graves
 그레이브즈
+gwen
+그웬
 gnar
 나르
 nami
@@ -46,6 +48,8 @@ leona
 레오나
 reksai
 렉사이
+rell
+렐
 rengar
 렝가
 lucian
@@ -88,6 +92,8 @@ veigar
 베이가
 vayne
 베인
+vex
+벡스
 velkoz
 벨코즈
 volibear
@@ -100,6 +106,8 @@ vladimir
 블라디미르
 blitzcrank
 블리츠크랭크
+viego
+비에고
 viktor
 빅토르
 poppy
@@ -154,6 +162,8 @@ azir
 아지르
 akali
 아칼리
+akshan
+아크샨
 aatrox
 아트록스
 aphelios
