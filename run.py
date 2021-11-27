@@ -324,7 +324,7 @@ def KorCOVID19():
     KoreanDeadAllFemale = int(KoreanDeadAllFemale.replace(",", ""))
 
     embed = discord.Embed(title = DataDay + " 한국 코로나 확진자")
-    embed.add_field(name = "한국 누적확진자", value = str(KoreanDeadAllMale + KoreanDeadAllFemale) + " ( " + KoreanConfirmedPlus + " )")
+    embed.add_field(name = "한국 누적확진자", value = str(KoreanConfirmedAllMale + KoreanConfirmedAllFemale) + " ( " + KoreanConfirmedPlus + " )")
     embed.add_field(name = "한국 누적사망자", value = str(KoreanDeadAllMale + KoreanDeadAllFemale) + " ( " + KoreanDeadPlus + " )", inline = False)
 
     return embed
