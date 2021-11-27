@@ -352,7 +352,7 @@ def EngToEmoji(EngSentence):
         else:
             EmojiLetterList.append(" ")
 
-    return ''.join(EmojiLetterList)
+    return ' '.join(EmojiLetterList)
 
 #롤 스펠이름 (영어 -> 한글)
 def SpellEngToKor(EngSpellName):
