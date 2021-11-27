@@ -139,6 +139,9 @@ async def on_message(message):
     
     elif param[0] == "!영재":
         await message.channel.send(embed = GeniusToKor())
+
+    elif param[0] == "!영어":
+        await message.channel.send(EngToEmoji(' '.join(param[1:])))
         
     #명령어 오류
     else:
@@ -337,6 +340,19 @@ def GeniusToKor():
     end_time = datetime.date(2021, 12, 20)
 
     return discord.Embed(title = "영재 한국행까지 " + str((end_time - start_time).days) + "일 남았습니다.", description = "한국뿌셔 지구뿌셔")
+
+def EngToEmoji(EngSentence):
+    EngSentence = EngSentence.lower()
+    EngLetterList = list(EngSentence)
+    EmojiLetterList = []
+
+    for letter in EngLetterList:
+        if letter != " ":
+            EmojiLetterList.append(":regional_indicator_" + letter + ":")
+        else:
+            EmojiLetterList.append(" ")
+
+    return ''.join(EmojiLetterList)
 
 #롤 스펠이름 (영어 -> 한글)
 def SpellEngToKor(EngSpellName):
