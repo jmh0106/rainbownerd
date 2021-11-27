@@ -306,14 +306,26 @@ def KorCOVID19():
     _url = "http://ncov.mohw.go.kr/bdBoardList_Real.do"
     source = requests.get(_url).text
     soup = BeautifulSoup(source, "html.parser")
-    한국누적확진자 = soup.select_one("#content > div > div.caseTable > div:nth-child(1) > ul > li:nth-child(1) > dl > dd").get_text()
-    한국추가누적확진자 = soup.select_one("#content > div > div.caseTable > div:nth-child(1) > ul > li:nth-child(2) > dl > dd > ul > li:nth-child(1) > p").get_text()
-    한국누적사망자 = soup.select_one("#content > div > div.caseTable > div:nth-child(4) > ul > li:nth-child(1) > dl > dd").get_text()
-    한국추가누적사망자 = soup.select_one("#content > div > div.caseTable > div:nth-child(4) > ul > li:nth-child(2) > dl > dd > span").get_text()
 
-    embed = discord.Embed(title = "한국, 캐나다 코로나 확진자")
-    embed.add_field(name = "한국 누적확진자", value = 한국누적확진자 + " ( " + 한국추가누적확진자 + " )")
-    embed.add_field(name = "한국 누적사망자", value = 한국누적사망자 + " ( " + 한국추가누적사망자 + " )", inline = False)
+    DataDay = soup.select_one("#content > div > div:nth-child(7) > table > thead > tr > th:nth-child(8)").get_text()
+
+    KoreanConfirmedPlus = soup.select_one("#content > div > div:nth-child(14) > table > tbody > tr:nth-child(1) > td:nth-child(8)").get_text()
+    KoreanConfirmedAllMale = soup.select_one("#content > div > div:nth-child(28) > table > tbody > tr:nth-child(1) > td:nth-child(2) > span:nth-child(1)").get_text()
+    KoreanConfirmedAllFemale = soup.select_one("#content > div > div:nth-child(28) > table > tbody > tr:nth-child(2) > td:nth-child(2) > span:nth-child(1)").get_text()
+    
+    KoreanDeadPlus = soup.select_one("#content > div > div:nth-child(7) > table > tbody > tr:nth-child(1) > td:nth-child(8)").get_text()
+    KoreanDeadAllMale = soup.select_one("#content > div > div:nth-child(28) > table > tbody > tr:nth-child(1) > td:nth-child(3) > span:nth-child(1)").get_text()
+    KoreanDeadAllFemale = soup.select_one("#content > div > div:nth-child(28) > table > tbody > tr:nth-child(2) > td:nth-child(3) > span:nth-child(1)").get_text()
+
+    KoreanConfirmedAllMale = int(KoreanConfirmedAllMale.replace(",", ""))
+    KoreanConfirmedAllFemale = int(KoreanConfirmedAllFemale.replace(",", ""))
+
+    KoreanDeadAllMale = int(KoreanDeadAllMale.replace(",", ""))
+    KoreanDeadAllFemale = int(KoreanDeadAllFemale.replace(",", ""))
+
+    embed = discord.Embed(title = DataDay + " : 한국 코로나 확진자")
+    embed.add_field(name = "한국 누적확진자", value = str(KoreanDeadAllMale + KoreanDeadAllFemale) + " ( " + KoreanConfirmedPlus + " )")
+    embed.add_field(name = "한국 누적사망자", value = str(KoreanDeadAllMale + KoreanDeadAllFemale) + " ( " + KoreanDeadPlus + " )", inline = False)
 
     return embed
 
