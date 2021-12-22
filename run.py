@@ -250,7 +250,11 @@ def showLOLBuild(ChampionName):
     URL = "https://lol.ps/search/?q=" + parse.quote(ChampionName)
 
     # 셀레니움 크롤링 실행
-    driver = webdriver.Chrome(executable_path = '/app/.chromedriver/bin/chromedriver')
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--disable-gpu")
+
+    driver = webdriver.Chrome(executable_path = '/app/.chromedriver/bin/chromedriver', chrome_options = chrome_options)
     driver.implicitly_wait(WAIT_TIME_TO_LOAD)
     driver.get(url = URL)
     driver.maximize_window()
