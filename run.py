@@ -65,7 +65,7 @@ async def on_message(message):
         if param[1] == "빌드":
             isError = False
 
-            msg = await message.channel.send(showLOLBuild(param[2]), message.channel)
+            await message.channel.send(showLOLBuild(param[2]), message.channel)
         
         #전적
         else:
