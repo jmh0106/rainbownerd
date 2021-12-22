@@ -65,7 +65,7 @@ async def on_message(message):
         if param[1] == "빌드":
             isError = False
 
-            msg = await message.channel.send(showLOLBuild(param[2]))
+            msg = await message.channel.send(showLOLBuild(param[2]), message.channel)
         
         #전적
         else:
@@ -245,23 +245,27 @@ def showLOLUserInfo(userName, countNum, isNa):
     return embed
 
 #롤 빌드 출력
-def showLOLBuild(ChampionName):
+def showLOLBuild(ChampionName, channel):
     # 찾을 챔피언 검색
     URL = "https://lol.ps/search/?q=" + parse.quote(ChampionName)
+    channel.send(URL)
 
     # 셀레니움 크롤링 실행
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--disable-gpu")
+    channel.send("크롬 옵션 설정 완료")
 
     driver = webdriver.Chrome(executable_path = '/app/.chromedriver/bin/chromedriver', chrome_options = chrome_options)
     driver.implicitly_wait(WAIT_TIME_TO_LOAD)
     driver.get(url = URL)
     driver.maximize_window()
+    channel.send("URL 로딩 및 창띄우기 성공")
 
     chamBuild = driver.find_element_by_xpath("/html/body/main/div[1]/section")
     chamBuildImage = chamBuild.screenshot_as_png
-    
+    channel.send("이미지 캡쳐 성공")
+
     return chamBuildImage
     
 #롤 챔피언 이름 ( 한글 -> 영어 )
