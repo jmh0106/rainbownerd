@@ -257,8 +257,8 @@ def showLOLBuild(ChampionName):
 
     chamBuild = driver.find_element_by_xpath("/html/body/main/div[1]/section")
     chamBuildImage = chamBuild.screenshot_as_png
-    with open('test.png', 'wb') as file:
-        file.write(chamBuildImage)
+    
+    return chamBuildImage
     
     #주소 설정
     source = requests.get("https://www.op.gg/champion/" + LOLCharToEng(ChampionName).rstrip("\n") + "/statistics").text
