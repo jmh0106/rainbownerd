@@ -1,15 +1,27 @@
 # -*- coding: utf-8 -*- 
 #임포트
-import asyncio, discord, datetime, requests, urllib, time, random, os
+import os
+import time
+import random
+import urllib
+import asyncio
+import discord
+import datetime
+import requests
 
+
+from bs4         import BeautifulSoup
+from urllib      import parse
+from selenium    import webdriver
 from discord.ext import commands
-from bs4 import BeautifulSoup
+
+WAIT_TIME_TO_LOAD = 10
 
 #봇 초기 설정
 app = discord.Client()
 
 access_token = os.environ["BOT_TOKEN"]
-token = access_token
+token        = access_token
 
 #봇 첫 로그인
 @app.event
@@ -17,7 +29,7 @@ async def on_ready():
     print("다음으로 로그인 합니다 : ")
     print(app.user.name)
     print(app.user.id)
-    print("==========")
+    print("=" * 10)
     game = discord.Game("!도움말")
     await app.change_presence(status = discord.Status.online, activity = game)
 
@@ -25,7 +37,7 @@ async def on_ready():
 @app.event
 async def on_message(message):
     #봇의 메세지라면 리턴
-    if message.author.bot:
+    if message.author.bot: 
         return None
     
     #메세지 처리
@@ -53,7 +65,7 @@ async def on_message(message):
         if param[1] == "빌드":
             isError = False
 
-            msg = await message.channel.send(embed = showLOLBuild(param[2]))
+            msg = await message.channel.send(showLOLBuild(param[2]))
         
         #전적
         else:
@@ -134,12 +146,15 @@ async def on_message(message):
     elif param[0] == "!수능":
         await message.channel.send(embed = showSATDDAY())
 
+    #코로나
     elif param[0] == "!코로나":
         await message.channel.send(embed = KorCOVID19())
     
+    #장영재 한국 언제옴ㅋㅋ
     elif param[0] == "!영재":
         await message.channel.send(embed = GeniusToKor())
 
+    #영어 이모티콘 변환
     elif param[0] == "!영어":
         await message.channel.send(EngToEmoji(' '.join(param[1:])))
         
@@ -168,14 +183,14 @@ def showServerInfo():
     #임베디드 생성
     embed = discord.Embed(title = "레찐들을 위한 서버 레식하는 찐따들입니다!", description = "====================================", color = 0x000000)
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/543709358328905730/777064786898190356/Screenshot_20200522-033415.png")
-    embed.add_field(name = "!시간 <시간 추가>", value = "현재 캐나다 / 한국 시간을 알려줍니다.", inline = False)
-    embed.add_field(name = "!롤 <소환사 이름> <횟수 : 최대 9>", value = "롤 전적을 알려줍니다.", inline = False)
-    embed.add_field(name = "!롤 빌드 <챔피언 이름>", value = "롤 챔피언 빌드를 알려줍니다.")
-    embed.add_field(name = "!블서 <플레이어 이름>", value = "블랙서바이벌 전적을 알려줍니다.", inline = False)
-    embed.add_field(name = "!투표 <선택지 : 최소 2, 최대 5>", value = "투표를 진행할 수 있습니다.", inline = False)
-    embed.add_field(name = "!랜덤 <선택지 : 최소 1, 최대 10>", value = "랜덤한 선택지를 골라줍니다.", inline = False)
-    embed.add_field(name = "!주사위 <숫자> <숫자>", value = "두 수 사이의 랜덤한 숫자를 골라줍니다.", inline = False)
-    embed.add_field(name = "!수능", value = "수능까지 남은 날짜를 보여줍니다.", inline = False)
+    embed.add_field(name = "!시간 <시간 추가>",                 value = "현재 캐나다 / 한국 시간을 알려줍니다.",  inline = False)
+    embed.add_field(name = "!롤 <소환사 이름> <횟수 : 최대 9>", value = "롤 전적을 알려줍니다.",                  inline = False)
+    embed.add_field(name = "!롤 빌드 <챔피언 이름>",            value = "롤 챔피언 빌드를 알려줍니다.",           inline = False)
+    embed.add_field(name = "!블서 <플레이어 이름>",             value = "블랙서바이벌 전적을 알려줍니다.",        inline = False)
+    embed.add_field(name = "!투표 <선택지 : 최소 2, 최대 5>",   value = "투표를 진행할 수 있습니다.",             inline = False)
+    embed.add_field(name = "!랜덤 <선택지 : 최소 1, 최대 10>",  value = "랜덤한 선택지를 골라줍니다.",            inline = False)
+    embed.add_field(name = "!주사위 <숫자> <숫자>",             value = "두 수 사이의 랜덤한 숫자를 골라줍니다.", inline = False)
+    embed.add_field(name = "!수능",                             value = "수능까지 남은 날짜를 보여줍니다.",       inline = False)
     return embed
 
 #캐나다 / 한국 시간 출력
@@ -231,8 +246,19 @@ def showLOLUserInfo(userName, countNum, isNa):
 
 #롤 빌드 출력
 def showLOLBuild(ChampionName):
-    if LOLCharToEng(ChampionName) == None:
-        return discord.Embed(title = "!오류", description = ChampionName + "이라는 챔피언이 존재하지 않습니다.")
+    # 찾을 챔피언 검색
+    URL = "https://lol.ps/search/?q=" + parse.quote(ChampionName)
+
+    # 셀레니움 크롤링 실행
+    driver = webdriver.Chrome(executable_path = '/app/.chromedriver/bin/chromedriver')
+    driver.implicitly_wait(WAIT_TIME_TO_LOAD)
+    driver.get(url = URL)
+    driver.maximize_window()
+
+    chamBuild = driver.find_element_by_xpath("/html/body/main/div[1]/section")
+    chamBuildImage = chamBuild.screenshot_as_png
+    with open('test.png', 'wb') as file:
+        file.write(chamBuildImage)
     
     #주소 설정
     source = requests.get("https://www.op.gg/champion/" + LOLCharToEng(ChampionName).rstrip("\n") + "/statistics").text
