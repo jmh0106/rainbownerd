@@ -65,7 +65,7 @@ async def on_message(message):
         #빌드
         if param[1] == "빌드":
             isError = False
-            await message.channel.send(showLOLBuild(param[2]), message.channel)
+            await message.channel.send(showLOLBuild(param[2]))
         
         #전적
         else:
@@ -245,7 +245,7 @@ def showLOLUserInfo(userName, countNum, isNa):
     return embed
 
 #롤 빌드 출력
-def showLOLBuild(ChampionName, channel):
+def showLOLBuild(ChampionName):
     # 찾을 챔피언 검색
     URL = "https://lol.ps/search/?q=" + quote(ChampionName)
 
