@@ -247,25 +247,22 @@ def showLOLUserInfo(userName, countNum, isNa):
 #롤 빌드 출력
 def showLOLBuild(ChampionName, channel):
     # 찾을 챔피언 검색
-    channel.send("asdf")
     URL = "https://lol.ps/search/?q=" + quote(ChampionName)
-    channel.send(URL)
 
     # 셀레니움 크롤링 실행
     chrome_options = webdriver.ChromeOptions()
+    chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--disable-gpu")
-    channel.send("크롬 옵션 설정 완료")
-
-    driver = webdriver.Chrome(executable_path = '/app/.chromedriver/bin/chromedriver', chrome_options = chrome_options)
+    chrome_options.add_argument("--no-sandbox")
+    
+    driver = webdriver.Chrome(executable_path = os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
     driver.implicitly_wait(WAIT_TIME_TO_LOAD)
     driver.get(url = URL)
     driver.maximize_window()
-    channel.send("URL 로딩 및 창띄우기 성공")
 
     chamBuild = driver.find_element_by_xpath("/html/body/main/div[1]/section")
     chamBuildImage = chamBuild.screenshot_as_png
-    channel.send("이미지 캡쳐 성공")
 
     return chamBuildImage
     
