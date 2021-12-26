@@ -1,7 +1,7 @@
 import time
-
-from urllib                            import parse
-from selenium                          import webdriver
+from requests.utils        import quote
+from urllib                import parse
+from selenium              import webdriver
 WAIT_TIME_TO_LOAD = 10
 
 lol_dict = {
@@ -30,7 +30,7 @@ lol_dict = {
  
 # 찾을 챔피언 검색
 lol_dict['cham_name'] = "베인"
-URL = "https://lol.ps/search/?q=" + parse.quote(lol_dict['cham_name'])
+URL = "https://lol.ps/search/?q=" + quote("베인")
 
 # 셀레니움 크롤링 실행
 driver = webdriver.Chrome(executable_path = 'chromedriver')

@@ -10,10 +10,11 @@ import datetime
 import requests
 
 
-from bs4         import BeautifulSoup
-from urllib      import parse
-from selenium    import webdriver
-from discord.ext import commands
+from bs4            import BeautifulSoup
+from urllib         import parse
+from selenium       import webdriver
+from discord.ext    import commands
+from requests.utils import quote
 
 WAIT_TIME_TO_LOAD = 10
 
@@ -247,7 +248,7 @@ def showLOLUserInfo(userName, countNum, isNa):
 #롤 빌드 출력
 def showLOLBuild(ChampionName, channel):
     # 찾을 챔피언 검색
-    URL = "https://lol.ps/search/?q=" + parse.quote(ChampionName)
+    URL = "https://lol.ps/search/?q=" + quote(ChampionName)
     channel.send(URL)
 
     # 셀레니움 크롤링 실행
