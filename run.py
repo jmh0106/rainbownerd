@@ -65,7 +65,6 @@ async def on_message(message):
         #빌드
         if param[1] == "빌드":
             isError = False
-            await message.channel.send("롤 빌드 출력하겠습니다~" + param[2])
             await message.channel.send(showLOLBuild(param[2]), message.channel)
         
         #전적
