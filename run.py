@@ -248,6 +248,7 @@ def showLOLUserInfo(userName, countNum, isNa):
 #롤 빌드 출력
 def showLOLBuild(ChampionName, channel):
     # 찾을 챔피언 검색
+    channel.send("asdf")
     URL = "https://lol.ps/search/?q=" + quote(ChampionName)
     channel.send(URL)
 
