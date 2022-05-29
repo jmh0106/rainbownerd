@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*- 
 #임포트
 import os
-import time
 import random
 import urllib
 import asyncio
@@ -9,13 +8,15 @@ import discord
 import datetime
 import requests
 
+from bs4                                 import BeautifulSoup
+from urllib                              import parse
+from selenium                            import webdriver
+from discord.ext                         import commands
+from discord_slash                       import commands
+from requests.utils                      import quote
+from discord_slash.utils.manage_commands import create_choice, create_option
 
-from bs4            import BeautifulSoup
-from urllib         import parse
-from selenium       import webdriver
-from discord.ext    import commands
-from requests.utils import quote
-
+#전역 변수
 WAIT_TIME_TO_LOAD = 10
 
 #봇 초기 설정
@@ -31,6 +32,7 @@ async def on_ready():
     print(app.user.name)
     print(app.user.id)
     print("=" * 10)
+    
     game = discord.Game("!도움말")
     await app.change_presence(status = discord.Status.online, activity = game)
 
@@ -254,7 +256,7 @@ def showLOLBuild(ChampionName):
     chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--disable-gpu")
-    chrome_options.add_argument("--no-sandbox")
+    #chrome_options.add_argument("--no-sandbox")
     
     driver = webdriver.Chrome(executable_path = os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
     driver.implicitly_wait(WAIT_TIME_TO_LOAD)
