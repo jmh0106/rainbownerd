@@ -349,9 +349,9 @@ def KorCOVID19():
 def GeniusToKor():
     start_time_temp = datetime.datetime.now()
     start_time = datetime.date(start_time_temp.year, start_time_temp.month, start_time_temp.day)
-    end_time = datetime.date(2022, 3, 13)
+    end_time = datetime.date(2022, 7, 10)
 
-    return discord.Embed(title = "영재 한국행까지 " + str((end_time - start_time).days) + "일 남았습니다.", description = "한국뿌셔 지구뿌셔")
+    return discord.Embed(title = "영재 한국 거주까지 " + str((end_time - start_time).days) + "일 남았습니다.", description = "뉴욕주립대 뿌셔 종강 뿌셔")
 
 def EngToEmoji(EngSentence):
     EngSentence = EngSentence.lower()
